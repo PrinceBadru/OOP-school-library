@@ -44,11 +44,6 @@ In this project, you will start building your school library app. In this initia
 -add Student class.
 -add Teacher class.
 
-### Future Features <a name="Future-features">
--Book Management System.
--User Authentication.
--Search and Filter Functionality.
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -102,7 +97,11 @@ Must-Install-Project-with-the-Following-Programmes:
 
 - GitHub: [@PrinceBadru]
 - Twitter: [@NdawulaBadru]
-- 
+
+### Future Features <a name="Future-features">
+-Book Management System.
+-User Authentication.
+-Search and Filter Functionality.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
