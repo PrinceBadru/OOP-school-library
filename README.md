@@ -40,6 +40,11 @@ In this project, you will start building your school library app. In this initia
 
 ### Key Features <a name="key-features">
 
+-add Person class.
+-add Student class.
+-add Teacher class.
+
+### Future Features <a name="Future-features">
 -Book Management System.
 -User Authentication.
 -Search and Filter Functionality.
@@ -117,6 +122,7 @@ people.
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
 I would like to thank...
+
 
 - Microverse Community in Slack
 - -Code reviewers
