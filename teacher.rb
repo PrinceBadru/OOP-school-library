@@ -1,12 +1,14 @@
 require_relative 'Person'
 
 class Teacher < Person
-  def can_use_services?
-    true
+    def initialize(age, specialization, name = "Unknown")
+      super(name: name, age: age)
+      @specialization = specialization
+    end
+  
+    def can_use_services?
+      true
+    end
   end
+  
 
-  def initialize(specialization:, name: 'Unknown', age: 0)
-    super(name: name, age: age)
-    @specialization = specialization
-  end
-end
