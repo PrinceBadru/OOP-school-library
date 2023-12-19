@@ -23,3 +23,19 @@ class Person
     rand(1_000_000..9_999_999)
   end
 end
+
+require_relative 'nameable'
+
+class Person < Nameable
+  attr_reader :name
+
+  def initialize(age, name)
+    @age = age
+    @name = name
+  end
+
+  def correct_name
+    @name
+  end
+end
+
