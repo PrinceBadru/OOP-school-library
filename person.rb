@@ -6,7 +6,7 @@ class Person < Nameable
   attr_accessor :name, :age
   attr_reader :id
 
-  @@all_people = []  # Class variable to store all people
+  @all_people = [] # Class instance variable to store all people
 
   def initialize(age:, name: 'Unknown', parent_permission: true)
     super()
@@ -14,17 +14,18 @@ class Person < Nameable
     @age = age
     @name = name
     @parent_permission = parent_permission
-    @@all_people << self  # Add the person to the list when created
+    self.class.all << self # Add the person to the list when created
   end
 
   # Class method to retrieve all people
   def self.all
-    @@all_people
+    @all_people
   end
+
   # Class method to find a person by ID
   def self.find(person_id)
-    @@all_people.find { |person| person.id == person_id }
+    @all_people.find { |person| person.id == person_id }
   end
-  
+
   # Additional methods, if needed
 end
