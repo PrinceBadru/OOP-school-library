@@ -65,15 +65,41 @@ class App
   end
 
   def self.create_person
-    print 'Enter person name: '
+    print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+    role_choice = gets.chomp.to_i
+
+    case role_choice
+    when 1
+      create_student
+    when 2
+      create_teacher
+    else
+      puts 'Invalid choice. Please try again.'
+    end
+  end
+
+  def self.create_student
+    print 'Enter student name: '
     name = gets.chomp
-    print 'Enter person age: '
+    print 'Enter student age: '
     age = gets.chomp.to_i
     print 'Is parent permission granted? (true/false): '
     parent_permission = gets.chomp.downcase == 'true'
 
-    person = Person.new(age: age, name: name, parent_permission: parent_permission)
-    puts "Person #{person.name} created with ID: #{person.id}"
+    student = Student.new(age: age, name: name, parent_permission: parent_permission)
+    puts "Student #{student.name} created with ID: #{student.id}"
+  end
+
+  def self.create_teacher
+    print 'Enter teacher name: '
+    name = gets.chomp
+    print 'Enter teacher age: '
+    age = gets.chomp.to_i
+    print 'Enter teacher specialization: '
+    specialization = gets.chomp
+
+    teacher = Teacher.new(age: age, name: name, specialization: specialization)
+    puts "Teacher #{teacher.name} created with ID: #{teacher.id}"
   end
 
   def self.create_book
@@ -90,26 +116,31 @@ class App
     print 'Enter person ID for rental: '
     person_id = gets.chomp.to_i
     person = Person.find(person_id)
-
+  
     if person.nil?
       puts 'Person not found.'
       return
     end
-
-    print 'Enter book title for rental: '
-    book_title = gets.chomp
-    book = Book.find_by_title(book_title)
-
-    if book.nil?
-      puts 'Book not found.'
+  
+    puts 'Available Books for Rental:'
+    Book.all.each_with_index do |book, index|
+      puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
+    end
+  
+    print 'Select a book by entering the corresponding index: '
+    book_index = gets.chomp.to_i
+    selected_book = Book.all[book_index]
+  
+    if selected_book.nil?
+      puts 'Invalid book selection.'
       return
     end
-
+  
     print 'Enter rental date: '
     date = gets.chomp
-
-    create_and_display_rental(date, book, person)
-  end
+  
+    create_and_display_rental(date, selected_book, person)
+  end  
 
   def self.create_and_display_rental(date, book, person)
     Rental.new(date, book, person)
@@ -132,5 +163,6 @@ class App
     end
   end
 end
+
 # Run the app
 App.run

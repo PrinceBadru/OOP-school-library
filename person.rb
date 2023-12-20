@@ -19,12 +19,12 @@ class Person < Nameable
 
   # Class method to retrieve all people
   def self.all
-    @all_people
+    @all_people ||= [] # Initialize if not already set
   end
 
   # Class method to find a person by ID
   def self.find(person_id)
-    @all_people.find { |person| person.id == person_id }
+    all.find { |person| person.id == person_id }
   end
 
   # Additional methods, if needed
