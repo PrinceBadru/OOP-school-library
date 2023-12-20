@@ -19,7 +19,7 @@ class Person < Nameable
 
   # Class method to retrieve all people
   def self.all
-    @all_people ||= [] # Initialize if not already set
+    @all ||= [] # Initialize if not already set
   end
 
   # Class method to find a person by ID

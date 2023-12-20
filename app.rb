@@ -116,31 +116,35 @@ class App
     print 'Enter person ID for rental: '
     person_id = gets.chomp.to_i
     person = Person.find(person_id)
-  
+
     if person.nil?
       puts 'Person not found.'
       return
     end
-  
-    puts 'Available Books for Rental:'
-    Book.all.each_with_index do |book, index|
-      puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
-    end
-  
+
+    display_available_books
+
     print 'Select a book by entering the corresponding index: '
     book_index = gets.chomp.to_i
     selected_book = Book.all[book_index]
-  
+
     if selected_book.nil?
       puts 'Invalid book selection.'
       return
     end
-  
+
     print 'Enter rental date: '
     date = gets.chomp
-  
+
     create_and_display_rental(date, selected_book, person)
-  end  
+  end
+
+  def self.display_available_books
+    puts 'Available Books for Rental:'
+    Book.all.each_with_index do |book, index|
+      puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
+    end
+  end
 
   def self.create_and_display_rental(date, book, person)
     Rental.new(date, book, person)
