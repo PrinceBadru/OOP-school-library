@@ -21,6 +21,10 @@ class Person < Nameable
   def self.all
     @@all_people
   end
-
+  # Class method to find a person by ID
+  def self.find(person_id)
+    @@all_people.find { |person| person.id == person_id }
+  end
+  
   # Additional methods, if needed
 end
