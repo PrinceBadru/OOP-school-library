@@ -1,20 +1,14 @@
-# rental.rb
 class Rental
-  attr_reader :date, :book, :person
-
-  @all_rentals = [] # Class instance variable to store all rentals
+  attr_accessor :date
+  attr_reader :book, :person
 
   def initialize(date, book, person)
     @date = date
+
     @book = book
+    book.rentals << self
+
     @person = person
-    self.class.all << self # Add the rental to the list when created
+    person.rentals << self
   end
-
-  # Class method to retrieve all rentals
-  def self.all
-    @all ||= [] # Initialize if not already set
-  end
-
-  # Additional methods, if needed
 end
