@@ -1,6 +1,8 @@
 require_relative 'book'
 require_relative 'person'
 require_relative 'rental'
+require_relative 'teacher'
+require_relative 'student'
 
 class App
   def self.run
@@ -78,17 +80,19 @@ class App
     end
   end
 
-  def self.create_student
-    print 'Enter student name: '
-    name = gets.chomp
-    print 'Enter student age: '
-    age = gets.chomp.to_i
-    print 'Is parent permission granted? (true/false): '
-    parent_permission = gets.chomp.downcase == 'true'
+def self.create_student
+  print 'Enter student name: '
+  name = gets.chomp
+  print 'Enter student age: '
+  age = gets.chomp.to_i
+  print 'Enter student classroom: '
+  classroom = gets.chomp
+  print 'Is parent permission granted? (true/false): '
+  parent_permission = gets.chomp.downcase == 'true'
 
-    student = Student.new(age: age, name: name, parent_permission: parent_permission)
-    puts "Student #{student.name} created with ID: #{student.id}"
-  end
+  student = Student.new(age: age, classroom: classroom, name: name, parent_permission: parent_permission)
+  puts "Student #{student.name} created with ID: #{student.id}"
+end
 
   def self.create_teacher
     print 'Enter teacher name: '
@@ -113,32 +117,32 @@ class App
   end
 
   def self.create_rental
-    print 'Enter person ID for rental: '
-    person_id = gets.chomp.to_i
-    person = Person.find(person_id)
-
-    if person.nil?
-      puts 'Person not found.'
-      return
-    end
-
     display_available_books
-
+  
     print 'Select a book by entering the corresponding index: '
     book_index = gets.chomp.to_i
     selected_book = Book.all[book_index]
-
+  
     if selected_book.nil?
       puts 'Invalid book selection.'
       return
     end
-
+  
     print 'Enter rental date: '
     date = gets.chomp
-
+  
+    print 'Enter person ID for rental: '
+    person_id = gets.chomp.to_i
+    person = Person.find(person_id)
+  
+    if person.nil?
+      puts 'Person not found.'
+      return
+    end
+  
     create_and_display_rental(date, selected_book, person)
   end
-
+  
   def self.display_available_books
     puts 'Available Books for Rental:'
     Book.all.each_with_index do |book, index|

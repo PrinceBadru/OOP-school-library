@@ -1,12 +1,12 @@
 # person.rb
-
 require_relative 'nameable'
 
 class Person < Nameable
   attr_accessor :name, :age
-  attr_reader :id
+  attr_reader :id, :parent_permission
 
-  @all_people = [] # Class instance variable to store all people
+  # Class variable to store all people
+  @@all_people = []
 
   def initialize(age:, name: 'Unknown', parent_permission: true)
     super()
@@ -19,7 +19,7 @@ class Person < Nameable
 
   # Class method to retrieve all people
   def self.all
-    @all ||= [] # Initialize if not already set
+    @@all_people ||= [] # Initialize if not already set
   end
 
   # Class method to find a person by ID
