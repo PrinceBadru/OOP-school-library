@@ -13,7 +13,7 @@ class Rental
 
   # Class method to retrieve all rentals
   def self.all
-    @all_rentals ||= [] # Initialize if not already set
+    @all ||= [] # Initialize if not already set
   end
 
   # Additional methods, if needed
