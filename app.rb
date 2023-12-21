@@ -159,12 +159,12 @@ end
     print 'Enter person ID: '
     person_id = gets.chomp.to_i
     person = Person.find(person_id)
-
+  
     if person.nil?
       puts 'Person not found.'
       return
     end
-
+  
     puts "Rentals for #{person.name}:"
     person.rentals.each do |rental|
       puts "#{rental.book.title} on #{rental.date}"

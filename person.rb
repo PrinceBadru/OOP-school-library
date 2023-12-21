@@ -27,5 +27,9 @@ class Person < Nameable
     all.find { |person| person.id == person_id }
   end
 
+  def rentals
+    Rental.all.select { |rental| rental.person == self }
+  end
+
   # Additional methods, if needed
 end
