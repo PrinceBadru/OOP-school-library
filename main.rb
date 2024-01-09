@@ -1,23 +1,49 @@
-require_relative 'person'
-require_relative 'capitalize_decorator'
-require_relative 'trimmer_decorator'
+require_relative 'app'
 
-# See decorators in action
-person = Person.new(22, 'maximilianus')
-puts "Original Name: #{person.correct_name}"
+def all_options
+  puts "\nPlease choose an option by enterin a number:\n
+1 - List all Books\n
+2 - List all People\n
+3 - Create a Person\n
+4 - Create a Book\n
+5 - Create a Rental\n
+6 - List all rentals for a given person id\n
+7 - Exit"
+end
 
-capitalized_person = CapitalizeDecorator.new(person)
-puts "Capitalized Name: #{capitalized_person.correct_name}"
+def prompt
+  puts 'Welcome to School Library App!'
+  loop do
+    all_options
+    option = gets.chomp.to_i
+    break if option == 7
 
-capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
-puts "Capitalized and Trimmed Name: #{capitalized_trimmed_person.correct_name}"
+    call_option(option)
+  end
+end
 
-# See decorators in action
-person = Person.new(22, 'maximilianus')
-puts "Original Name: #{person.correct_name}"
+def call_option(option)
+  case option
+  when 1
+    list_books
+  when 2
+    list_people
+  when 3
+    create_person
+  when 4
+    create_book
+  when 5
+    create_rental
+  when 6
+    list_rentals
+  else
+    puts 'Choose between 1 - 7'
+  end
+end
 
-capitalized_person = CapitalizeDecorator.new(person)
-puts "Capitalized Name: #{capitalized_person.correct_name}"
+def main
+  app = App.new
+  app.run
+end
 
-capitalized_trimmed_person = TrimmerDecorator.new(capitalized_person)
-puts "Capitalized and Trimmed Name: #{capitalized_trimmed_person.correct_name}"
+main
