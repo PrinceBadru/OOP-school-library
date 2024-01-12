@@ -6,14 +6,15 @@ require_relative 'student'
 require_relative 'teacher'
 require_relative 'input'
 require_relative 'menu'
+require_relative 'storage'
 
 class App
   attr_accessor :books, :people, :rentals
 
   def initialize
-    @books = []
-    @rentals = []
-    @people = []
+    @books = Storage.read_books
+    @rentals = Storage.read_rentals
+    @people = Storage.read_people
   end
 
   def list_books
@@ -22,7 +23,7 @@ class App
       prompt
     else
       @books.each_with_index do |book, i|
-        puts "#{i}) Title: #{book.title}, Author: #{book.author}"
+        puts "#{i}) [#{book.class.name}] Title: #{book.title}, Author: #{book.author}"
       end
     end
   end
@@ -33,13 +34,17 @@ class App
       prompt
     else
       @people.each_with_index do |person, i|
-        puts "#{i}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+        if person
+          puts "#{i}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+        else
+          puts "#{i}) [Person data is corrupted or incomplete]"
+        end
       end
     end
   end
 
   def add_student
-    puts 'Age: '
+    puts 'Age:'
     age = get_user_input_integer('')
     puts 'Name: '
     name = get_user_input('')
@@ -48,6 +53,8 @@ class App
     parent_permission = obtain_parent_permission
 
     @people.push(Student.new(classroom, age, name, parent_permission: parent_permission))
+    LibraryManager.write_people(@people)
+    puts 'Person created successfully'
   end
 
   def add_teacher
@@ -61,6 +68,8 @@ class App
     parent_permission = obtain_parent_permission
 
     @people.push(Teacher.new(specialization, age, name, parent_permission: parent_permission))
+    LibraryManager.write_people(@people)
+    puts 'Person created successfully'
   end
 
   def add_person
@@ -76,8 +85,6 @@ class App
       puts 'Invalid choice. Please choose option 1 or option 2.'
       prompt
     end
-
-    puts 'Person created successfully'
   end
 
   def add_book
@@ -87,6 +94,7 @@ class App
     author = get_user_input('')
 
     @books.push(Book.new(title, author))
+    LibraryManager.write_books(@books)
   end
 
   def add_rental
@@ -106,7 +114,7 @@ class App
 
     print 'Date: '
     date = get_user_input('')
-
+    LibraryManager.write_rentals(rentals)
     handle_rental_creation(date, book, person)
   end
 
@@ -117,6 +125,7 @@ class App
       puts 'Error: Maximum number of rentals reached (20). Cannot add more rentals.'
     else
       @rentals.push(rental)
+      LibraryManager.write_rentals(@rentals)
       puts 'Rental created successfully'
     end
   end
@@ -146,6 +155,7 @@ class App
   end
 
   def quit_app
+    LibraryManager.write_people(@people)
     puts 'Thank you. See you soon'
   end
 

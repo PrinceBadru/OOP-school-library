@@ -1,7 +1,4 @@
 require_relative 'person'
-require_relative 'classroom'
-require_relative 'book'
-require_relative 'rental'
 
 class Student < Person
   attr_reader :classroom
@@ -16,7 +13,11 @@ class Student < Person
     classroom.students.push(self) unless classroom.students.include?(self)
   end
 
+  def to_s
+    "[Student] Name: #{name}, ID: #{id}, Age: #{age}, Classroom: #{classroom}"
+  end
+
   def play_hooky
-    '¯(ツ)/¯'
+    '¯\\(ツ)/¯'
   end
 end
