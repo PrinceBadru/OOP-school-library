@@ -33,44 +33,53 @@ class App
       puts 'Currently, there are no people in this library / school!'
       prompt
     else
-      @people.each_with_index do |person, i|
-        if person
-          puts "#{i}) [#{person.class.name}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
-        else
-          puts "#{i}) [Person data is corrupted or incomplete]"
+      filtered_people = @people.select { |person| person.is_a?(Student) || person.is_a?(Teacher) }
+  
+      if filtered_people.empty?
+        puts 'No students or teachers found!'
+      else
+        filtered_people.each_with_index do |person, i|
+          class_info = person.is_a?(Student) ? "Class: #{person.classroom}" : "Specialization: #{person.specialization}"
+          puts "#{i}) [#{person.class.name}] Name: #{person.age}, ID: #{person.id}, Age:#{person.name} , #{class_info}"
         end
       end
     end
   end
+  
+# Modify add_student method
+def add_student
+  puts 'Class:'
+  age = get_user_input_integer('')
+  puts 'Name:'
+  name = get_user_input('')
+  puts 'Age:'
+  classroom = get_user_input('')
+  parent_permission = obtain_parent_permission
 
-  def add_student
-    puts 'Age:'
-    age = get_user_input_integer('')
-    puts 'Name: '
-    name = get_user_input('')
-    puts 'Class:'
-    classroom = get_user_input('')
-    parent_permission = obtain_parent_permission
+  # Ensure to pass the correct arguments to the Student constructor
+  @people.push(Student.new(age, name, classroom, parent_permission: parent_permission))
+  LibraryManager.write_people(@people)
+  puts 'Person created successfully'
+end
 
-    @people.push(Student.new(classroom, age, name, parent_permission: parent_permission))
-    LibraryManager.write_people(@people)
-    puts 'Person created successfully'
-  end
 
-  def add_teacher
-    puts 'Age: '
-    age = get_user_input_integer('')
-    puts 'Name: '
-    name = get_user_input('')
-    puts 'Specialization: '
-    specialization = get_user_input('')
+# Modify add_teacher method
+def add_teacher
+  puts 'Specialization: '
+  age = get_user_input_integer('')
+  puts 'Name: '
+  name = get_user_input('')
+  puts 'Age: '
+  specialization = get_user_input('')
 
-    parent_permission = obtain_parent_permission
+  parent_permission = obtain_parent_permission
 
-    @people.push(Teacher.new(specialization, age, name, parent_permission: parent_permission))
-    LibraryManager.write_people(@people)
-    puts 'Person created successfully'
-  end
+  # Ensure to pass the correct arguments to the Teacher constructor
+  @people.push(Teacher.new(age, name, specialization, parent_permission: parent_permission))
+  LibraryManager.write_people(@people)
+  puts 'Person created successfully'
+end
+
 
   def add_person
     puts 'Do you want to create a student (1) or a teacher (2)? [input the number]: '
